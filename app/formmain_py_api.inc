@@ -2034,37 +2034,6 @@ begin
     Result:= ReturnNone;
 end;
 
-function api_ed_lock(Self, Args: PPyObject): PPyObject; cdecl;
-var
-  H: Int64;
-  Ed: TATSynEdit;
-begin
-  with AppPython.Engine do
-    if Bool(PyArg_ParseTuple(Args, 'L:lock', @H)) then
-    begin
-      Ed:= PyHelper_EditorFromHandle(H);
-      Ed.BeginUpdate;
-      Result:= ReturnNone;
-    end
-  else
-    Result:= ReturnNone;
-end;
-
-function api_ed_unlock(Self, Args: PPyObject): PPyObject; cdecl;
-var
-  H: Int64;
-  Ed: TATSynEdit;
-begin
-  with AppPython.Engine do
-    if Bool(PyArg_ParseTuple(Args, 'L:unlock', @H)) then
-    begin
-      Ed:= PyHelper_EditorFromHandle(H);
-      Ed.EndUpdate;
-      Result:= ReturnNone;
-    end
-  else
-    Result:= ReturnNone;
-end;
 
 function api_ed_focus(Self, Args: PPyObject): PPyObject; cdecl;
 var
@@ -10898,8 +10867,6 @@ begin
     AddMethod('ed_save', @api_ed_save, '');
     AddMethod('ed_load', @api_ed_load, '');
     AddMethod('ed_cmd', @api_ed_cmd, '');
-    AddMethod('ed_lock', @api_ed_lock, '');
-    AddMethod('ed_unlock', @api_ed_unlock, '');
     AddMethod('ed_bookmark', @api_ed_bookmark, '');
     AddMethod('ed_decor', @api_ed_decor, '');
     AddMethod('ed_focus', @api_ed_focus, '');
