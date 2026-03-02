@@ -1,16 +1,28 @@
 from cudatext import *
 
 class Command:
-    def run(self):
+    def add_many(self):
+        ntag = 100
         for i in range(ed.get_line_count()//2):
-            self.do_gap(i*2)
+            ntag += 1
+            self.do_gap(i*2, ntag)
+            ntag += 1
+            self.do_gap(i*2, ntag)
+            ntag += 1
+            self.do_gap(i*2, ntag)
 
-    def do_gap(self, num):
+    def do_gap(self, nline, ntag):
         id_bitmap, id_canvas = ed.gap(GAP_MAKE_BITMAP, 600, 50)
         canvas_proc(id_canvas, CANVAS_SET_BRUSH, color=0xa0ffa0)
         canvas_proc(id_canvas, CANVAS_SET_ANTIALIAS, style=ANTIALIAS_ON)
         canvas_proc(id_canvas, CANVAS_POLYGON, '200,0,300,30,200,49')
         canvas_proc(id_canvas, CANVAS_SET_BRUSH, color=0xffffff, style=BRUSH_CLEAR)
-        canvas_proc(id_canvas, CANVAS_TEXT, x=230, y=10, text='gap %d'%(num+1))
+        canvas_proc(id_canvas, CANVAS_TEXT, x=205, y=10, text='tag%d'%ntag)
         canvas_proc(id_canvas, CANVAS_SET_BRUSH, color=0xffffff, style=BRUSH_SOLID)
-        ed.gap(GAP_ADD, num, id_bitmap, tag=10)
+        ed.gap(GAP_ADD, nline, id_bitmap, tag=ntag)
+
+    def on_click_gap(self, ed_self, state, nline, ntag, size_x, size_y, pos_x, pos_y):
+        print('on_click_gap: line %d, tag %d'%(nline+1, ntag))
+
+    def del_all(self):
+        ed.gap(GAP_DELETE_ALL, 0, 0)
