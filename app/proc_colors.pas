@@ -143,7 +143,11 @@ type
 const
   cAppThemeColorsWhichAllowNone: set of TAppThemeColor =
     [
+    TAppThemeColor.EdCaret,
+    TAppThemeColor.EdCurLineBg2,
     TAppThemeColor.EdBlockStapleActive,
+    TAppThemeColor.OtherTextFont,
+    TAppThemeColor.OtherTextBg,
     TAppThemeColor.TabFontActive,
     TAppThemeColor.TabCloseBg,
     TAppThemeColor.MenuFont..TAppThemeColor.MenuSelBg,
